@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                {% for item in products %}
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="{{ item.picture.url }}" alt="..." />
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <h5 class="fw-bolder">{{ item.name }}</h5>
+                                    {% if item.is_sale %}
+                                        <strike>{{ item.price | intcomma }}</strike>
+                                        <br>
+                                        {{ item.sale_price | intcomma }}تومان
+                                    {% else %}
+                                        {{ item.price | intcomma }}تومان
+                                    {% endif %}
+                                    <p>{{ item.description }}</p>
+                                </div>
+                            </div>
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' item.id %}">برو به صفحه محصول</a></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

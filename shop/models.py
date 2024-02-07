@@ -2,7 +2,7 @@ from django.db import models
 import  datetime
 
 
-class category(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=20)
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Customer(models.Model):
 class Products(models.Model):
             name = models.CharField(max_length=20)
             description = models.TextField(blank=True)
-            category = models.ForeignKey(category, on_delete=models.CASCADE, default=1)
+            category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
             price = models.DecimalField(max_digits=20, decimal_places=2)
             picture = models.ImageField(upload_to='upload/Product/')
 
@@ -41,4 +41,4 @@ class Order(models.Model):
     status = models.BooleanField(default=False)
 
     def __str__(self):
-                    return self.name
+     return self.product

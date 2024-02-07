@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">ثبت نام</h1>
+                <p class="lead fw-normal text-white-50 mb-0">حساب کاربری جدید</p>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="card border-0 shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <h2>ایجاد حساب کاربری </h2>
+                        <form method="post" action="{% url 'register_user' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_first_name" class="form-label">Username</label>
+                                <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="لطفا نام کاربری را وارد کنید">
+                                {% for error in register_form.first_name.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" id="id_email" placeholder="ایمیل را وارد کنید">
+                                {% for error in register_form.email.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password1" class="form-label">Password</label>
+                                <input type="password" name="password1" class="form-control" id="id_password1" placeholder="پسورد خود را وارد کنید">
+                                {% for error in register_form.password1.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password2" class="form-label">Re-enter Password</label>
+                                <input type="password" name="password2" class="form-control" id="id_password2" placeholder="مجدد پسورد خود را وارد کنید">
+                                {% for error in register_form.password2.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
