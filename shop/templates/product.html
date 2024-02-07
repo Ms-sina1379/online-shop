@@ -19,11 +19,34 @@
                             {% else %}
                                 <p class="card-text">{{ products.sale_price }}</p>
                             {% endif %}
+                            <br><br>
+                            <a href="{% url 'home' %}" class="btn btn-secondary" >بازگشت به صفحه خرید </a>
                             <br>
-                            <br>
-                            <a href="#" class="btn btn-primary">افزودن به سبد خرید</a>
+                            <button class="btn btn-secondary" type="button" value='{{ product.id }}' id="add_cart">  افزودن به سبد خرید </button>
+                            </a>
                         </div>
                     </div>
+                  <script>
+                            $(document).on("click", '#add_cart', function (e) {
+                                e.preventDefault();
+                                $.ajax({
+                                    url: "{% url 'cart_add' %}",
+                                    method: "POST",
+                                    data: {
+                                        product_id: $("#add_cart").val(),
+                                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                                        action: 'post'
+                                    },
+                                    success: function (json) {
+                                        console.log(json);
+                                    },
+                                    error: function (xhr, errmsg, err) {
+                                        console.log(xhr.status + ": " + xhr.responseText);
+                                    }
+                                });
+                            });
+                   </script>
+
                 </div>
             </div>
         {% else %}
