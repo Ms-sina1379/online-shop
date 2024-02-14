@@ -44,7 +44,12 @@ def register_user(request):
             password = register_form.cleaned_data.get('password1')
             email = register_form.cleaned_data.get('email')
             User.objects.create_user(username=user_name, password=password, email=email)
+            messages.success(request, 'User registered successfully. Please log in.')
             return redirect("login_user")
+        else:
+            # If the form is not valid, you can pass the form with errors to the template
+            context = {'register_form': register_form}
+            return render(request, "register.html", context)
 
     context = {'register_form': register_form}
     return render(request, "register.html", context)
@@ -58,7 +63,7 @@ def logout_user(request):
 
 def product(request, pk):
     products = Products.objects.get(id=pk)
-    return render(request, "product.html ", {'products': products})
+    return render(request, "product.html", {'products': products})
 
 
 def category(request, cat):

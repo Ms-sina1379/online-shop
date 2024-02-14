@@ -31,7 +31,7 @@
                                 e.preventDefault();
                                 $.ajax({
                                     url: "{% url 'cart_add' %}",
-                                    method: "POST",
+                                    method: "post",
                                     data: {
                                         product_id: $("#add_cart").val(),
                                         csrfmiddlewaretoken: '{{ csrf_token }}',
