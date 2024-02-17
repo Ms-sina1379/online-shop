@@ -47,12 +47,13 @@ def register_user(request):
             messages.success(request, 'User registered successfully. Please log in.')
             return redirect("login_user")
         else:
+            print(register_form.errors, "00000000000000")
             # If the form is not valid, you can pass the form with errors to the template
             context = {'register_form': register_form}
-            return render(request, "register.html", context)
+            return render(request, "Register.html", context)
 
     context = {'register_form': register_form}
-    return render(request, "register.html", context)
+    return render(request, "Register.html", context)
 
 
 def logout_user(request):
@@ -73,5 +74,4 @@ def category(request, cat):
         products = Products.objects.filter(category=category)
         return render(request, "category.html", {'products': products, 'category': category})
     except Category.DoesNotExist:
-        print(54545454)
         return redirect("home")

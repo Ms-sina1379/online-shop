@@ -19,30 +19,22 @@
                             <div class="mb-3">
                                 <label for="id_first_name" class="form-label">Username</label>
                                 <input type="text" name="first_name" class="form-control" id="id_first_name" placeholder="لطفا نام کاربری را وارد کنید">
-                                {% for error in register_form.first_name.errors %}
-                                    <div class="invalid-feedback">{{ error }}</div>
-                                {% endfor %}
+                                {{ register_form.first_name.errors }}
                             </div>
                             <div class="mb-3">
                                 <label for="id_email" class="form-label">Email</label>
                                 <input type="email" name="email" class="form-control" id="id_email" placeholder="ایمیل را وارد کنید">
-                                {% for error in register_form.email.errors %}
-                                    <div class="invalid-feedback">{{ error }}</div>
-                                {% endfor %}
+                                {{ register_form.email.errors }}
                             </div>
                             <div class="mb-3">
                                 <label for="id_password1" class="form-label">Password</label>
                                 <input type="password" name="password1" class="form-control" id="id_password1" placeholder="پسورد خود را وارد کنید">
-                                {% for error in register_form.password1.errors %}
-                                    <div class="invalid-feedback">{{ error }}</div>
-                                {% endfor %}
+                               {{ register_form.password1.errors }}
                             </div>
                             <div class="mb-3">
                                 <label for="id_password2" class="form-label">Re-enter Password</label>
                                 <input type="password" name="password2" class="form-control" id="id_password2" placeholder="مجدد پسورد خود را وارد کنید">
-                                {% for error in register_form.password2.errors %}
-                                    <div class="invalid-feedback">{{ error }}</div>
-                                {% endfor %}
+                                {{ register_form.password2.errors }}
                             </div>
                             <button type="submit" class="btn btn-primary">Register</button>
                         </form>

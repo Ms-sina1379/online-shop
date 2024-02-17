@@ -9,17 +9,16 @@ def cart_summary(request):
 
 def cart_add(request):
     cart = Cart(request)
-    if request.POST.get('action') == 'post':
-        product_id = request.POST.get('product_id')
-
+    if request.POST.get('action') == 'POST':
+        product_id = int(request.POST.get('product_id '))
         product = get_object_or_404(Products, id=product_id)
-        cart.add(product=product)
+        cart.add(product = product)
         response = JsonResponse({'product_name': product.name})
         return response
 
-
+#
 def cart_delete(request):
-    pass  # Implement this function if you need to delete items from the cart
-
+    pass
 def cart_update(request):
-    pass  # Implement this function if you need to update items in the cart
+
+    pass
