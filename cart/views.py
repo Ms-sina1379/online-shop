@@ -13,11 +13,10 @@ def cart_add(request):
         product_id = int(request.POST.get('product_id'))
         product = get_object_or_404(Products, id=product_id)
         cart.add(product=product)
-        return JsonResponse({'product_name': product.name})
+        cart_quantity = len(cart)
+        return JsonResponse({'qty': cart_quantity})
     else:
-        # In case the request method is not POST or 'action' is not 'POST'
-        # You might want to handle this differently based on your use case
-        return JsonResponse({'error': 'Invalid request'}, status=400)
+        return JsonResponse({'error': 'Invalid request'} , status=200)
 
 #
 def cart_delete(request):

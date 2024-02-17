@@ -26,26 +26,28 @@
                             </a>
                         </div>
                     </div>
-                  <script>
-                            $(document).on("click", '#add_cart', function (e) {
-                                e.preventDefault();
-                                $.ajax({
-                                    url: "{% url 'cart_add' %}",
-                                    method: "post",
-                                    data: {
-                                        product_id: $("#add_cart").val(),
-                                        csrfmiddlewaretoken: '{{ csrf_token }}',
-                                        action: 'post'
-                                    },
-                                    success: function (json) {
-                                        console.log(json);
-                                    },
-                                    error: function (xhr, errmsg, err) {
-                                        console.log(xhr.status + ": " + xhr.responseText);
-                                    }
-                                });
+                 <script>
+                        $(document).on("click", '#add_cart', function (e) {
+                            e.preventDefault();
+                            var productId = $(this).data("product-id");
+                            $.ajax({
+                                url: "{% url 'cart_add' %}",
+                                method: "POST",
+                                data: {
+                                    product_id: productId,
+                                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                                    action: 'post'
+                                },
+                                success: function (response) {
+                                    console.log(response);
+                                },
+                                error: function (xhr, errmsg, err) {
+                                    console.error(xhr.status + ": " + xhr.responseText);
+                                }
                             });
-                   </script>
+                        });
+                 </script>
+
 
                 </div>
             </div>
