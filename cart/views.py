@@ -4,19 +4,24 @@ from shop.models import Products
 from django.http import JsonResponse,HttpResponse
 
 def cart_summary(request):
-    return render(request, 'cart_summery.html')
+    print("cccccccccccc")
+    cart = Cart(request)
+    cart_products = cart.get_prods()
+    return render(request, 'cart_summery.html', {'cart_products': cart_products})
+
 
 
 def cart_add(request):
     cart = Cart(request)
-    if request.method == 'POST' and request.POST.get('action') == 'POST':
+    if request.method == 'POST':
         product_id = int(request.POST.get('product_id'))
         product = get_object_or_404(Products, id=product_id)
         cart.add(product=product)
         cart_quantity = len(cart)
-        return JsonResponse({'qty': cart_quantity})
+        response=JsonResponse({'qty': cart_quantity})
+        return response
     else:
-        return JsonResponse({'error': 'Invalid request'} , status=200)
+        return JsonResponse({'error': 'Invalid request'}, status=200)
 
 #
 def cart_delete(request):

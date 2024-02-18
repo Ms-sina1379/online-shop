@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from cart.cart import Cart
 from .models import (Products,
                      Category)
 from django.contrib.auth import authenticate, login, logout
@@ -44,11 +46,9 @@ def register_user(request):
             password = register_form.cleaned_data.get('password1')
             email = register_form.cleaned_data.get('email')
             User.objects.create_user(username=user_name, password=password, email=email)
-            messages.success(request, 'User registered successfully. Please log in.')
+            messages.success(request, 'حساب کاربری شما با موفقیت ساخته شد .')
             return redirect("login_user")
         else:
-            print(register_form.errors, "00000000000000")
-            # If the form is not valid, you can pass the form with errors to the template
             context = {'register_form': register_form}
             return render(request, "Register.html", context)
 
@@ -68,7 +68,7 @@ def product(request, pk):
 
 
 def category(request, cat):
-    cat = cat.replace("-", " ")  # Remove hyphens from the category name
+    cat = cat.replace("-", " ")
     try:
         category = Category.objects.get(name=cat)
         products = Products.objects.filter(category=category)
