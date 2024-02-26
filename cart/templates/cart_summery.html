@@ -1,25 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load humanize %}
-        {% block content %}
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">سبد خرید شما  </h1>
-                    <p class="lead fw-normal text-white-50 mb-0">خرید شما ثبت میشود  </p>
-                </div>
+{% block content %}
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">سبد خرید شما  </h1>
             </div>
-        </header>
-       <br>
-            <div class="container" style="direction: rtl;">
-                {% for products in cart_products %}
+        </div>
+    </header>
+    <br>
+    <div class="container" style="direction: rtl;">
+        {% for product in cart_products %}
+            <div>
                 <p>
-                    <strong>{{ products.name }}</strong><br>
-                    {{ products.description }}<br>
-                    Price: {{ products.price }}
+                    <strong>{{ product.name }}</strong><br>
+                    {{ product.description }}<br>
+                    Price: {{ product.price }}
                 </p>
-                {% endfor %}
+                <form method="post" action="{% url 'delete_from_cart' cart_item_id=product.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit" class="btn btn-danger">حذف</button>
+                </form>
             </div>
-                 <br><br><br><br><br>
-            {% endblock %}
-
+            <hr>
+        {% endfor %}
+    </div>
+    <br><br><br><br><br>
+{% endblock %}

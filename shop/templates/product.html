@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
-        <br>
-        <br>
-        <br>
         {% if products %}
             <div class="card mb-3"  style="width: 450px; height: 300px;;">
                 <div class="row g-0">
@@ -19,7 +16,16 @@
                             {% else %}
                                 <p class="card-text">{{ products.sale_price }}</p>
                             {% endif %}
-                            <br><br>
+                        <p class="card-text">تعداد؛</p>
+                        {% for key,value in quantity.item %}
+                            {% endfor %}
+                        <select class="form-select form-select-sm" id="cart_qty">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="3">4</option>
+                        </select>
+                            <br>
                             <a href="{% url 'home' %}" class="btn btn-secondary" >بازگشت به صفحه خرید </a>
                             <br>
                             <button class="btn btn-secondary" type="button" value='{{ products.id }}' id="add_cart">  افزودن به سبد خرید </button>
@@ -29,14 +35,13 @@
                  <script>
                        $(document).on("click", '#add_cart', function (e) {
                            e.preventDefault();
-
                               var productId = $(this).val();
-
                                     $.ajax({
                                         url: "{% url 'cart_add' %}",
                                         method: "POST",
                                         data: {
                                             product_id: productId,
+                                            product_qty: $ ('#cart_qty option:selected').text(),
                                             csrfmiddlewaretoken: '{{ csrf_token }}',
                                             action: 'post'
                                         },

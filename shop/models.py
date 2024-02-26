@@ -1,5 +1,5 @@
 from django.db import models
-import  datetime
+import datetime
 
 
 class Category(models.Model):
