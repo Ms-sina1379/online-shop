@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect
 
 from cart.cart import Cart
-from .models import (Products,
-                     Category)
+from .models import (Products,Category)
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import RegisterForm
-
+from django.db.models import Q
 
 def home_page(request):
     products = Products.objects.all()
@@ -75,3 +74,20 @@ def category(request, cat):
         return render(request, "category.html", {'products': products, 'category': category})
     except Category.DoesNotExist:
         return redirect("home")
+
+
+def search(request):
+    if request.method == "POST":
+        search = request.POST.get('search', '')
+        products = Products.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
+
+        if not search:
+            messages.error(request, "لطفا اسم محصول را وارد کنید ")
+            return render(request, "search.html", {})
+
+        products = Products.objects.filter(name__icontains=search)
+        if not products:
+            messages.info(request, "مجدد تلاش کنید")
+        return render(request, "search.html", {'products': products, 'search': search})
+    else:
+        return render(request, "search.html", {})

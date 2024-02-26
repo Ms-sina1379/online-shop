@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <p class="lead fw-normal text-white-50 mb-0">جستوجوی محصولات مورد نظر </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <form  method="post" action={% url 'search' %}>
+                        {% csrf_token %}
+                        <div class="mb-3"></div>
+                        <input type="text"class="form_control"placeholder=" " name="search">
+                        <button type="submit"class="btn btn-secondary"> جستوجوی محصول </button>
+                </div>
+            </div>
+        </div>
+    </div>
+            {% if search %}
+                {% for product in search%}
+                    {{ products }}
+                {% endfor %}
+
+            {% endif %}
+</div>
+{% endblock %}

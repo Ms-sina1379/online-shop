@@ -25,8 +25,9 @@
                 </div>
             </div>
         </header>
-        <!-- Navigation-->
-        {% include 'navbar.html' %}
+
+            <!-- Navigation-->
+            {% include 'navbar.html' %}
                 {% if messages%}
                               {% for messages in messages  %}
                                   <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -35,11 +36,11 @@
                                   </div>
                               {% endfor %}
                 {% endif %}
-                <br><br>
         {% block content %}
         {% endblock %}
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
+    <br>
+    <
+    <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white"> elleinshop </p></div>
         </footer>
         <!-- Bootstrap core JS-->
