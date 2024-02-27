@@ -7,16 +7,16 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import RegisterForm
 from django.db.models import Q
-
+# home page 
 def home_page(request):
     products = Products.objects.all()
     return render(request, "index.html", {'products': products})
 
-
+# about as page website 
 def about(request):
     return render(request, "about.html")
 
-
+#login user information page
 def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -32,13 +32,12 @@ def login_user(request):
     else:
         return render(request, "login.html")
 
-
+#register user informations 
 def register_user(request):
     if request.user.is_authenticated:
         return redirect("home")
 
     register_form = RegisterForm(request.POST or None)
-
     if request.method == 'POST':
         if register_form.is_valid():
             user_name = register_form.cleaned_data.get('first_name')
@@ -54,18 +53,18 @@ def register_user(request):
     context = {'register_form': register_form}
     return render(request, "Register.html", context)
 
-
+#logout page
 def logout_user(request):
     logout(request)
     messages.success(request, "خروج شما با موفقیت انجام شد ")
     return render(request, "logout.html")
 
-
+#product page query set datebass 
 def product(request, pk):
     products = Products.objects.get(id=pk)
     return render(request, "product.html", {'products': products})
 
-
+#category product
 def category(request, cat):
     cat = cat.replace("-", " ")
     try:
@@ -75,7 +74,7 @@ def category(request, cat):
     except Category.DoesNotExist:
         return redirect("home")
 
-
+#search box viwe:
 def search(request):
     if request.method == "POST":
         search = request.POST['search']
