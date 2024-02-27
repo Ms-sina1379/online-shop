@@ -78,16 +78,13 @@ def category(request, cat):
 
 def search(request):
     if request.method == "POST":
-        search = request.POST.get('search', '')
-        products = Products.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
-
+        search = request.POST['search']
         if not search:
             messages.error(request, "لطفا اسم محصول را وارد کنید ")
             return render(request, "search.html", {})
-
-        products = Products.objects.filter(name__icontains=search)
+        products = Products.objects.filter(Q(name__icontains=search) | Q(description__icontains=search))
         if not products:
-            messages.info(request, "مجدد تلاش کنید")
+            messages.info(request, "محصولی یافت نشد.")
         return render(request, "search.html", {'products': products, 'search': search})
     else:
         return render(request, "search.html", {})

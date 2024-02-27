@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block content %}
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <p class="lead fw-normal text-white-50 mb-0">جستوجوی محصولات مورد نظر </p>
+            <p class="lead fw-normal text-white-50 mb-0">جستجوی محصولات مورد نظر</p>
         </div>
     </div>
 </header>
@@ -15,20 +16,45 @@
                 <div class="card-header">
                 </div>
                 <div class="card-body">
-                    <form  method="post" action={% url 'search' %}>
+                    <form method="post" action="{% url 'search' %}">
                         {% csrf_token %}
                         <div class="mb-3"></div>
-                        <input type="text"class="form_control"placeholder=" " name="search">
-                        <button type="submit"class="btn btn-secondary"> جستوجوی محصول </button>
+                        <input type="text" class="form-control" placeholder="" name="search">
+                        <button type="submit" class="btn btn-secondary">جستجوی محصول</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-            {% if search %}
-                {% for product in search%}
-                    {{ products }}
-                {% endfor %}
-
-            {% endif %}
+    <br>
+    <br>
+    <br>
+    {% if products %}
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        {% for item in products %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <img class="card-img-top" src="{{ item.picture.url }}" alt="..." />
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        <h5 class="fw-bolder">{{ item.name }}</h5>
+                        {% if item.is_sale %}
+                        <strike>{{ item.price | intcomma }}</strike>
+                        <br>
+                        {{ item.sale_price | intcomma }}تومان
+                        {% else %}
+                        {{ item.price | intcomma }}تومان
+                        {% endif %}
+                        <p>{{ item.description }}</p>
+                    </div>
+                </div>
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' item.id %}">برو به صفحه محصول</a></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
